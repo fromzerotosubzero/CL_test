@@ -22,64 +22,48 @@ optional arguments:
 ```
 E.g.:
 ```
-python file_analyser.py -p /mnt/c/Users/user/Pictures -k 500
+python file_analyser.py -p /home/user/Pictures -k 500
 ```
 
 ### Report examples
 When provided path is faulty:
 ```
-❯ python3 file_analyser.py -p /mnt/c/Users/user/Desktop/cloudlinux_te
-Path /mnt/c/Users/user/Pictur is not valid or doesn't exist. Please try again.
+❯ python3 file_analyser.py -p home/user/Desktop/cloudlinux_te
+Path home/user/Desktop/cloudlinux_te is not valid or doesn't exist. Please try again.
 ```
 When there are no files above threshold:
 ```
-❯ python file_analyser.py -p  C:\\Users\user\Desktop\cloudlinux_test\ -k 500
+❯ python file_analyser.py -p /home/user/CL_test -k 500
 
 File system structure and usage report:
 
 File type: development
 Quantity: 2
-Size: 7.91 KB
+Size: 10.52 KB
 
-File type: text
+File type: system
 Quantity: 1
-Size: 7.91 KB
+Size: 11.73 KB
 
-File type: database
-Quantity: 1
-Size: 95.91 KB
+AHTUNG! It's a world writable file: /home/user/CL_test/README.md
 
-AHTUNG! It's a world writable file: C:\\Users\user\Desktop\cloudlinux_test\file_analyser.py
-AHTUNG! It's a world writable file: C:\\Users\user\Desktop\cloudlinux_test\.vs\VSWorkspaceState.json
-AHTUNG! It's a world writable file: C:\\Users\user\Desktop\cloudlinux_test\requirements.txt
-AHTUNG! It's a world writable file: C:\\Users\user\Desktop\cloudlinux_test\.vs\slnx.sqlite
 ```
 When there are files above threshold: 
 ```
-❯ python file_analyser.py -p  C:\\Users\user\Desktop\cloudlinux_test\ -k 5
+❯ python file_analyser.py -p /home/user/CL_test -k 5
 
 File system structure and usage report:
 
 File type: development
 Quantity: 2
-Size: 7.91 KB
+Size: 10.52 KB
 
-File type: text
+File type: system
 Quantity: 1
-Size: 7.91 KB
+Size: 11.73 KB
 
-File type: database
-Quantity: 1
-Size: 95.91 KB
+AHTUNG! It's a world writable file: /home/user/CL_test/README.md
 
-AHTUNG! It's a world writable file: C:\\Users\user\Desktop\cloudlinux_test\file_analyser.py
-AHTUNG! It's a world writable file: C:\\Users\user\Desktop\cloudlinux_test\.vs\VSWorkspaceState.json
-AHTUNG! It's a world writable file: C:\\Users\user\Desktop\cloudlinux_test\requirements.txt
-AHTUNG! It's a world writable file: C:\\Users\user\Desktop\cloudlinux_test\.vs\slnx.sqlite
-
-File C:\\Users\user\Desktop\cloudlinux_test\file_analyser.py size exceeds threshold value 5.00 KB being 7.83 KB
-
-File C:\\Users\user\Desktop\cloudlinux_test\.vs\slnx.sqlite size exceeds threshold value 5.00 KB being 88.00 KB
+File /home/user/CL_test/file_analyser.py size exceeds threshold value 5.00 KB being 7.71 KB
 ```
-
 
