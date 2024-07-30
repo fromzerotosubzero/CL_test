@@ -30,11 +30,17 @@ presentation = ['presentationFiles', 'ppt', 'pptx', 'pps', 'ppsx', 'odp', 'key']
 video = ['videoFiles', 'mpg', 'mpeg', 'avi', 'mp4', 'flv', 'h264', 'mov', 'mk4', 'swf', 'wmv', 'mkv', 'plist', 'm4v', 'trec', '3g2', '3gp', 'rm', 'vob']
 categories = {'text': text, 'image': image, 'development': development, 'spreadsheet': spreadsheet, 'system': system, 'executable': executable, 'archive': archive, 'audio': audio, 'database': database, 'presentation': presentation, 'video': video}
 
+# error handler for os.walk method
+def walk_error_handler(e):
+    if e.errno == errno.EACCES:
+        print(f'Can\'t access directory {e.filename}. Please check permisions.\n')
+    else:
+        print(f'OSError for {e.filename} error code {e.errno}, error message: {e.strerror}.\n')  
 
 # sorting files by category based on their extensions
 def file_groups(path):
     allgroups =  {}
-    for root, dirs, files in os.walk(path):
+    for root, dirs, files in os.walk(path, onerror=walk_error_handler):
         for name in files:
             full_path = join(root, name)
             extension = os.path.splitext(full_path)[1][1:]
@@ -105,7 +111,7 @@ def main():
     path = args.path
     if not os.path.exists(path):
         print(f'Path {path} is not valid or doesn\'t exist. Please try again.')
-    try:
+    else:
         # starting analisys
         print('\nFile system structure and usage report:\n')
 
@@ -122,9 +128,6 @@ def main():
                     file_size = getsize(full_path)
                     if file_size > min_size:
                         print(f'\nFile {full_path} size exceeds threshold value {format_size(min_size)} being {format_size(file_size)}')
-
-    except OSError:
-        print(f'Can\'t access directory {path}. Please check permisions.')
 
       
 if __name__ == '__main__':
