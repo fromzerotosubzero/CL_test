@@ -1,6 +1,7 @@
 import os
 import argparse
 import stat
+import errno
 
 from os.path import getsize, join
 
@@ -36,9 +37,6 @@ def file_groups(path):
     for root, dirs, files in os.walk(path):
         for name in files:
             full_path = join(root, name)
-            if os.access(full_path, os.R_OK) == False:
-                print(f'Permission to read denied for: {full_path}')
-                continue
             extension = os.path.splitext(full_path)[1][1:]
             for key, value in categories.items():
                 if extension in value:
@@ -107,8 +105,8 @@ def main():
     path = args.path
     if not os.path.exists(path):
         print(f'Path {path} is not valid or doesn\'t exist. Please try again.')
-    # starting analisys
-    else:
+    try:
+        # starting analisys
         print('\nFile system structure and usage report:\n')
 
         groups = file_groups(path)
@@ -124,6 +122,9 @@ def main():
                     file_size = getsize(full_path)
                     if file_size > min_size:
                         print(f'\nFile {full_path} size exceeds threshold value {format_size(min_size)} being {format_size(file_size)}')
+
+    except OSError:
+        print(f'Can\'t access directory {path}. Please check permisions.')
 
       
 if __name__ == '__main__':
