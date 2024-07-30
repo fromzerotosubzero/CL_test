@@ -36,6 +36,9 @@ def file_groups(path):
     for root, dirs, files in os.walk(path):
         for name in files:
             full_path = join(root, name)
+            if os.access(full_path, os.R_OK) == False:
+                print(f'Permission to read denied for: {full_path}')
+                continue
             extension = os.path.splitext(full_path)[1][1:]
             for key, value in categories.items():
                 if extension in value:
@@ -104,10 +107,8 @@ def main():
     path = args.path
     if not os.path.exists(path):
         print(f'Path {path} is not valid or doesn\'t exist. Please try again.')
-    elif os.path.exists(path) or (os.access(path, os.R_OK) == False):
-        # using 'Easier to Ask Forgiveness than Permission' philosophy to add reading permissions
-        os.system(f'chmod -R +r {path}')
     # starting analisys
+    else:
         print('\nFile system structure and usage report:\n')
 
         groups = file_groups(path)
